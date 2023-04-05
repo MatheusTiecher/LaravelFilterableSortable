@@ -5,12 +5,15 @@ To use this package, you first need to configure your model. In the model, speci
 
 For example, let's configure the Product model:
 ```
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Gurgentil\LaravelFilterableSortable\FilterableSortable;
+use App\Traits\Model\FilterableSortable;
 
 class Product extends Model
 {
-    use FilterableSortable;
+    use HasFactory, FilterableSortable;
 
     protected $filterable = [
         'description',
