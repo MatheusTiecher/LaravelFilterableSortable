@@ -1,33 +1,49 @@
 # LaravelFilterableSortable
-Laravel Filterable Sortable
-This package provides a trait that can be used in Laravel models to easily apply filters and sorts to Eloquent queries. The trait provides two scopes: scopeFilter and scopeSort, which can be used to apply filters and sorting, respectively.
+LaravelFilterableSortable is a package that provides a trait for Laravel models that enables easy filtering and sorting of Eloquent queries. The package includes two scopes, namely scopeFilter and scopeSort, that can be used to apply filters and sorting to queries, respectively.
 
-To apply, let's start by configuring the Product model. In the model with the <b>filterable</b> array with the available fields. Remembering to import the
-trait <b>FilterableSortable</b>.
+To use this package, you first need to configure your model. In the model, specify an array named <b>$filterable</b>, which contains the available fields to be filtered. Additionally, import the FilterableSortable trait.
 
+For example, let's configure the Product model:
 ```
-  protected $filterable = [
-    'description',
-    'slug',
-  ];
-```
+use Illuminate\Database\Eloquent\Model;
+use Gurgentil\LaravelFilterableSortable\FilterableSortable;
 
-How to use in controller ProductController In the index method. Passing the request to the sequential paraments in eloquent, <b>filter</b> and <b>sort</b>.
-```
-  public function index(Request $request)
-  {
-    $products = Product::filter($request)
-                  ->sort($request)
-                  ->paginate($request->per_page ?? 10);
+class Product extends Model
+{
+    use FilterableSortable;
 
-    return response()->json($products);
-  }
+    protected $filterable = [
+        'description',
+        'slug',
+    ];
+
+    // ...
+}
 ```
 
+Next, in your controller (e.g., ProductController), use the index method to pass the request and sequentially apply filtering and sorting to the Eloquent query.
+```
+use App\Models\Product;
+use Illuminate\Http\Request;
 
-Pass the filters and sorting criteria in the URL query parameters:
+class ProductController extends Controller
+{
+    public function index(Request $request)
+    {
+        $products = Product::filter($request)
+            ->sort($request)
+            ->paginate($request->per_page ?? 10);
+
+        return response()->json($products);
+    }
+
+    // ...
+}
+```
+
+Finally, pass the filters and sorting criteria as URL query parameters. For example:
 ```
 /products?search=test&column_filter[]=description&column_filter[]=slug&sort_by=description&sort_type=asc
 ```
 
-This package is licensed under the MIT License. See the LICENSE file for details.
+Note that this package is licensed under the MIT License. Please see the LICENSE file for details.
