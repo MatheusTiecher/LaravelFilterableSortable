@@ -25,7 +25,7 @@ class Product extends Model
 ```
 
 Next, in your controller (e.g., ProductController), use the index method to pass the request and sequentially apply filtering and sorting to the Eloquent query.
-```
+```PHP
 use App\Models\Product;
 use Illuminate\Http\Request;
 
