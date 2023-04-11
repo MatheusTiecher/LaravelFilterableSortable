@@ -4,7 +4,7 @@ LaravelFilterableSortable is a package that provides a trait for Laravel models 
 To use this package, you first need to configure your model. In the model, specify an array named <b>$filterable</b>, which contains the available fields to be filtered. Additionally, import the FilterableSortable trait.
 
 For example, let's configure the Product model:
-```
+```PHP
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
