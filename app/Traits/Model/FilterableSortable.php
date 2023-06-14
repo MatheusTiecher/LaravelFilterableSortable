@@ -46,10 +46,15 @@ trait FilterableSortable
      */
     public function scopeSort(Builder $query, Request $request): Builder
     {
-        // Check if the 'sort_by' parameter is present in the request
-        if ($request->has('sort_by')) {
-            // Apply the ORDER BY clause to the query
-            $query->orderBy($request->sort_by, $request->sort_type ?? 'asc');
+        // Iterate over each 'filterable' column of the model
+        foreach ($this->filterable as $columnFilterable) {
+            // Check if the 'sort_by' parameter is present in the request
+            if ($request->has('sort_by')) {
+                if ($columnFilterable == $request->sort_by) {
+                    // Apply the ORDER BY clause to the query
+                    $query->orderBy($request->sort_by, $request->sort_type ?? 'asc');
+                }
+            }
         }
 
         // Return the sorted query
